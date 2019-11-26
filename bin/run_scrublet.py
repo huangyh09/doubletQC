@@ -89,6 +89,9 @@ def main():
                          expected_doublet_rate=expected_rate)
     raw_scores, raw_doublet = scrub.scrub_doublets(n_prin_comps=30)
     simu_scores = scrub.doublet_scores_sim_
+    # when there is no suggested threshold
+    if raw_doublet is None: 
+        raw_doublet = np.array([None] * len(raw_scores))
     
     _cutoff = np.quantile(raw_scores, 1 - (1 - homotypic_prop) * expected_rate)
     label_frac = raw_scores >= _cutoff
